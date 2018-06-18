@@ -27,15 +27,23 @@ class GoogleLogin extends Component {
     }
 
     const auth2 = window.gapi.auth2.getAuthInstance()
-    const { onLoginSuccess, onLoginFailure, onRequest } = this.props
+    const { onLoginSuccess, onLoginFailure, onRequest, offline, prompt } = this.props
 
     onRequest();
 
-    auth2.signIn()
+    if (offline) {
+      auth2.signIn()
       .then(
-      res => onLoginSuccess(res),
-      err => onLoginFailure(err)
+        res => onLoginSuccess(res),
+        err => onLoginFailure(err)
       );
+    } else {
+      auth2.grantOfflineAccess({ prompt });
+      .then(
+        res => onLoginSuccess(res),
+        err => onLoginFailure(err)
+      )
+    }
 
   }
 
