@@ -31,7 +31,7 @@ class GoogleLogin extends Component {
 
     onRequest();
 
-    if (offline) {
+    if (!offline) {
       auth2.signIn()
       .then(
         res => onLoginSuccess(res),
