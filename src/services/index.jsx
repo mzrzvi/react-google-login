@@ -34,7 +34,8 @@ const initGoogleClientAPI = (params, onUpdateSigninStatus, onInitFailure) => () 
 }
 
 const makeGoogleParams = (props) => {
-    const { clientId, cookiePolicy, hostedDomain, fetchBasicProfile, redirectUri, uxMode, scope } = props
+    const { clientId, cookiePolicy, hostedDomain, fetchBasicProfile, redirectUri,
+              uxMode, scope, responseType } = props
 
     return ({
         client_id: clientId,
@@ -43,6 +44,7 @@ const makeGoogleParams = (props) => {
         fetch_basic_profile: fetchBasicProfile,
         ux_mode: uxMode,
         redirect_uri: redirectUri,
+        response_type: responseType,
         scope
     })
 }
@@ -104,6 +106,7 @@ GoogleAPI.propTypes = {
     hostedDomain: PropTypes.string,
     redirectUri: PropTypes.string,
     children: PropTypes.node,
+    responseType: PropTypes.string,
 };
 
 GoogleAPI.defaultProps = {
@@ -112,6 +115,7 @@ GoogleAPI.defaultProps = {
     fetchBasicProfile: true,
     prompt: '',
     uxMode: 'popup',
+    responseType: 'permission',
 };
 
 export default GoogleAPI;
