@@ -38,11 +38,11 @@ class GoogleLogin extends Component {
         err => onLoginFailure(err)
       );
     } else {
-      auth2.grantOfflineAccess({ prompt });
+      auth2.grantOfflineAccess({ prompt })
       .then(
         res => onLoginSuccess(res),
         err => onLoginFailure(err)
-      )
+      );
     }
 
   }

@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "aed49d2ea73b4f6785bd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ae90dbbaacf29f7bf6d4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7160,16 +7160,26 @@ var GoogleLogin = function (_Component) {
       var _props = this.props,
           onLoginSuccess = _props.onLoginSuccess,
           onLoginFailure = _props.onLoginFailure,
-          onRequest = _props.onRequest;
+          onRequest = _props.onRequest,
+          offline = _props.offline,
+          prompt = _props.prompt;
 
 
       onRequest();
 
-      auth2.signIn().then(function (res) {
-        return onLoginSuccess(res);
-      }, function (err) {
-        return onLoginFailure(err);
-      });
+      if (offline) {
+        auth2.signIn().then(function (res) {
+          return onLoginSuccess(res);
+        }, function (err) {
+          return onLoginFailure(err);
+        });
+      } else {
+        auth2.grantOfflineAccess({ prompt: prompt }).then(function (res) {
+          return onLoginSuccess(res);
+        }, function (err) {
+          return onLoginFailure(err);
+        });
+      }
     }
   }, {
     key: 'render',
