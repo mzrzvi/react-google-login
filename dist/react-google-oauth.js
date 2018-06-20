@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "063b8b4727df46496820"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4fb183f75749bdf380ba"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7140,6 +7140,7 @@ var GoogleLogin = function (_Component) {
     var _this = _possibleConstructorReturn(this, (GoogleLogin.__proto__ || Object.getPrototypeOf(GoogleLogin)).call(this, props, context));
 
     _this.signIn = _this.signIn.bind(_this);
+    _this.authorize = _this.authorize.bind(_this);
     return _this;
   }
 
@@ -7200,7 +7201,11 @@ var GoogleLogin = function (_Component) {
     }
   }, {
     key: 'authorize',
-    value: function authorize() {
+    value: function authorize(e) {
+      if (e) {
+        e.preventDefault(); // to prevent submit if used within form
+      }
+
       var _props3 = this.props,
           onLoginSuccess = _props3.onLoginSuccess,
           onLoginFailure = _props3.onLoginFailure;
