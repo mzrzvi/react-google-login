@@ -18,19 +18,10 @@ const insertGoogleScript = (documentRoot, id, handleClientLoad) => {
 
 // Loads auth2 library
 const handleClientLoad = (initGoogleClient) => () =>
-    window.gapi.load('auth2', initGoogleClient);
+  window.gapi.load('auth2', initGoogleClient);
 
 const initGoogleClientAPI = (params, onUpdateSigninStatus, onInitFailure) => () => {
-
-    const auth2 = window.gapi.auth2
-    auth2.init(params).then(
-        () => {
-            // Listen for sign-in state changes.
-            auth2.getAuthInstance().isSignedIn.listen(onUpdateSigninStatus);
-            // Handle the initial sign-in state.
-            onUpdateSigninStatus(auth2.getAuthInstance().isSignedIn.get());
-        }, onInitFailure
-    )
+  const auth2 = window.gapi.auth2
 }
 
 const makeGoogleParams = (props) => {

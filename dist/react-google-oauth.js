@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a95ff0dcedb6b523674b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "44f69b4662795b0d06cd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7145,6 +7145,12 @@ var GoogleLogin = function (_Component) {
   }
 
   _createClass(GoogleLogin, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      (0, _invariant2.default)(this.context.reactGoogleApi, 'A <GoogleLogin> can be used only as child or descendant of <GoogleApi> ');
+      (0, _invariant2.default)(_react2.default.Children.count(this.props.children) === 0, 'A <GoogleLogin> can\'t have child, use <CustomGoogleLogin> instead');
+    }
+  }, {
     key: 'signIn',
     value: function signIn(e) {
       if (e) {
@@ -7557,14 +7563,7 @@ var handleClientLoad = function handleClientLoad(initGoogleClient) {
 
 var initGoogleClientAPI = function initGoogleClientAPI(params, onUpdateSigninStatus, onInitFailure) {
     return function () {
-
         var auth2 = window.gapi.auth2;
-        auth2.init(params).then(function () {
-            // Listen for sign-in state changes.
-            auth2.getAuthInstance().isSignedIn.listen(onUpdateSigninStatus);
-            // Handle the initial sign-in state.
-            onUpdateSigninStatus(auth2.getAuthInstance().isSignedIn.get());
-        }, onInitFailure);
     };
 };
 
