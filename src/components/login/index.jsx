@@ -62,7 +62,7 @@ class GoogleLogin extends Component {
     const { onLoginSuccess, onLoginFailure } = this.props;
 
     const auth2 = window.gapi.auth2;
-    const params = getAuthorizeParams();
+    const params = this.getAuthorizeParams();
 
     auth2.authorize(params, (response) => {
       if (response.error) {

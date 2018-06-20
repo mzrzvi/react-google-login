@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "de7ec27b55ebaaf78a40"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ed8b16e47075cd58940b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7167,19 +7167,55 @@ var GoogleLogin = function (_Component) {
 
       onRequest();
 
-      if (!offline) {
-        auth2.signIn().then(function (res) {
-          return onLoginSuccess(res);
-        }, function (err) {
-          return onLoginFailure(err);
-        });
-      } else {
+      if (offline) {
         auth2.grantOfflineAccess({ prompt: prompt }).then(function (res) {
           return onLoginSuccess(res);
         }, function (err) {
           return onLoginFailure(err);
         });
+      } else {
+        auth2.signIn().then(function (res) {
+          return onLoginSuccess(res);
+        }, function (err) {
+          return onLoginFailure(err);
+        });
       }
+    }
+  }, {
+    key: 'getAuthorizeParams',
+    value: function getAuthorizeParams() {
+      var _props2 = this.props,
+          clientId = _props2.clientId,
+          scope = _props2.scope,
+          responseType = _props2.responseType,
+          prompt = _props2.prompt;
+
+
+      return {
+        client_id: clientId,
+        response_type: responseType,
+        prompt: prompt,
+        scope: scope
+      };
+    }
+  }, {
+    key: 'authorize',
+    value: function authorize() {
+      var _props3 = this.props,
+          onLoginSuccess = _props3.onLoginSuccess,
+          onLoginFailure = _props3.onLoginFailure;
+
+
+      var auth2 = window.gapi.auth2;
+      var params = this.getAuthorizeParams();
+
+      auth2.authorize(params, function (response) {
+        if (response.error) {
+          onLoginFailure(response);
+        } else {
+          onLoginSuccess(response);
+        }
+      });
     }
   }, {
     key: 'render',
@@ -7190,7 +7226,7 @@ var GoogleLogin = function (_Component) {
         backgroundColor: this.props.backgroundColor,
         disabled: this.props.disabled,
         className: "react-google-oauth-button-login",
-        onClickFunc: this.signIn,
+        onClickFunc: this.authorize,
         width: this.props.width
       });
     }
@@ -7573,7 +7609,15 @@ var GoogleAPI = function (_Component) {
     _createClass(GoogleAPI, [{
         key: 'getChildContext',
         value: function getChildContext() {
+            var _props = this.props,
+                clientId = _props.clientId,
+                scope = _props.scope,
+                responseType = _props.responseType,
+                prompt = _props.prompt;
+
+
             return {
+                clientId: clientId, scope: scope, responseType: responseType, prompt: prompt,
                 reactGoogleApi: true
             };
         }
