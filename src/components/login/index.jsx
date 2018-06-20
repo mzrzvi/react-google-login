@@ -48,7 +48,7 @@ class GoogleLogin extends Component {
   }
 
   getAuthorizeParams() {
-    const { clientId, scope, responseType, prompt } = this.context;
+    const { clientId, scope, responseType, prompt } = this.props;
 
     return {
       client_id: clientId,
