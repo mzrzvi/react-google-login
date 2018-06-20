@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ed8b16e47075cd58940b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "063b8b4727df46496820"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -7609,15 +7609,7 @@ var GoogleAPI = function (_Component) {
     _createClass(GoogleAPI, [{
         key: 'getChildContext',
         value: function getChildContext() {
-            var _props = this.props,
-                clientId = _props.clientId,
-                scope = _props.scope,
-                responseType = _props.responseType,
-                prompt = _props.prompt;
-
-
             return {
-                clientId: clientId, scope: scope, responseType: responseType, prompt: prompt,
                 reactGoogleApi: true
             };
         }
