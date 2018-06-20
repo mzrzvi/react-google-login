@@ -8,6 +8,7 @@ class GoogleLogin extends Component {
   constructor(props, context) {
     super(props, context);
     this.signIn = this.signIn.bind(this);
+    this.authorize = this.authorize.bind(this);
   }
 
   componentWillMount() {
@@ -58,8 +59,12 @@ class GoogleLogin extends Component {
     }
   }
 
-  authorize() {
-    const { onLoginSuccess, onLoginFailure } = this.props;
+  authorize(e) {
+    if (e) {
+      e.preventDefault() // to prevent submit if used within form
+    }
+
+    const { onLoginSuccess, onLoginFailure } = this.props
 
     const auth2 = window.gapi.auth2;
     const params = this.getAuthorizeParams();
