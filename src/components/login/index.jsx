@@ -11,17 +11,6 @@ class GoogleLogin extends Component {
     this.authorize = this.authorize.bind(this);
   }
 
-  componentWillMount() {
-    invariant(
-      this.context.reactGoogleApi,
-      'A <GoogleLogin> can be used only as child or descendant of <GoogleApi> '
-    )
-    invariant(
-      React.Children.count(this.props.children) === 0,
-      'A <GoogleLogin> can\'t have child, use <CustomGoogleLogin> instead'
-    )
-  }
-
   signIn(e) {
     if (e) {
       e.preventDefault() // to prevent submit if used within form
