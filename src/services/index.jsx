@@ -56,9 +56,12 @@ const initGoogleClientAPIFailure = err =>
 class GoogleAPI extends Component {
 
     getChildContext() {
-        return {
-            reactGoogleApi: true
-        }
+      const { clientId, scope, responseType, prompt } = this.props;
+
+      return {
+        clientId, scope, responseType, prompt,
+        reactGoogleApi: true
+      }
     }
 
     componentWillMount() {

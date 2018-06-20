@@ -31,20 +31,46 @@ class GoogleLogin extends Component {
 
     onRequest();
 
-    if (!offline) {
-      auth2.signIn()
+    if (offline) {
+      auth2.grantOfflineAccess({ prompt })
       .then(
         res => onLoginSuccess(res),
         err => onLoginFailure(err)
       );
     } else {
-      auth2.grantOfflineAccess({ prompt })
+      auth2.signIn()
       .then(
         res => onLoginSuccess(res),
         err => onLoginFailure(err)
       );
     }
 
+  }
+
+  getAuthorizeParams() {
+    const { clientId, scope, responseType, prompt } = this.context;
+
+    return {
+      client_id: clientId,
+      response_type: responseType,
+      prompt,
+      scope
+    }
+  }
+
+  authorize() {
+    const { onLoginSuccess, onLoginFailure } = this.props;
+
+    const auth2 = window.gapi.auth2;
+    const params = getAuthorizeParams();
+
+    auth2.authorize(params, (response) => {
+      if (response.error) {
+        onLoginFailure(response);
+      } else {
+        onLoginSuccess(response);
+      }
+    });
   }
 
   render() {
@@ -54,7 +80,7 @@ class GoogleLogin extends Component {
       backgroundColor: this.props.backgroundColor,
       disabled: this.props.disabled,
       className: "react-google-oauth-button-login",
-      onClickFunc: this.signIn,
+      onClickFunc: this.authorize,
       width: this.props.width
     })
   }
